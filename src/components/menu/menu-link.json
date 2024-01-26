@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_menu_menu_links",
+  "info": {
+    "displayName": "menuLink",
+    "icon": "apps"
+  },
+  "options": {},
+  "attributes": {
+    "link": {
+      "type": "text",
+      "required": true,
+      "maxLength": 2048,
+      "minLength": 1
+    },
+    "text": {
+      "type": "string",
+      "maxLength": 150,
+      "minLength": 3
+    },
+    "newTab": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

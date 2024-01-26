@@ -1,0 +1,123 @@
+fragment image on UploadFile {
+
+  alternativeText
+  url
+}
+fragment menuLink on ComponentMenuMenuLink{
+  id
+  link
+  text
+  newTab
+}
+fragment settings on Setting{
+  blogName
+  blogDescription
+  logo{
+    data{
+      attributes{
+        ...image
+      }
+    }
+  }
+  menuLink{
+    ...menuLink
+  }
+  Text
+}
+fragment post on Post{
+  title
+  slug
+  tags{
+    data{
+      attributes{
+        displayName
+      }
+    }
+  }
+  author{
+    data{
+      attributes{
+        slug
+      }
+    }
+  }
+}
+
+query GET_SETTINGS{
+  setting{
+    data {
+      attributes{
+        ...settings
+      }
+    }
+  }
+  posts{
+    data{
+      attributes{
+        ...post
+      }
+    }
+  }
+}
+
+query GET_POST($id : ID!){
+  post(id:$id){
+    data{
+      attributes{
+        ...post
+      }
+    }
+  }
+}
+query GET_POST_BY_SLUG($postSlug : String!){
+  posts(filters: {
+    slug: {eq:$postSlug}
+  }){
+    data{
+      attributes{
+        ...post
+      }
+    }
+  }
+}
+query GET_POST_BY_AUTHOR($authorslug : String!){
+  posts(filters:{
+    author:{
+      slug:{
+        eq:$authorslug
+      }
+    }
+  }){
+    data{
+      attributes{
+        ...post
+      }
+    }
+  }
+}
+query GET_POST_BY_CATEGORY($slugcategory : String!){
+  posts(filters:{
+    categories:{
+      slug:{eq: $slugcategory}
+    }
+  }){
+    data{
+      attributes{
+        ...post
+      }
+    }
+  }
+}
+query GET_POST_BY_TAG($slugtag : String!){
+  posts(filters:{
+    tags:{
+      slug:{eq: $slugtag}
+    }
+  }){
+    data{
+      attributes{
+        ...post
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+fragment image on UploadFile {
+  alternativeText
+  url
+}
+
+fragment cover on Post {
+  cover {
+    data {
+      attributes {
+        ...image
+      }
+    }
+  }
+}
+
+fragment tag on Tag {
+  displayName
+  slug
+}
+
+fragment author on Author {
+  displayName
+  slug
+}
+
+fragment category on Category {
+  DisplayName
+  slug
+}
+
+fragment tags on Post {
+  tags {
+    data {
+      attributes {
+        ...tag
+      }
+    }
+  }
+}
+
+fragment authorPost on Post {
+  author {
+    data {
+      attributes {
+        ...author
+      }
+    }
+  }
+}
+
+fragment categories on Post {
+  categories {
+    data {
+      attributes {
+        ...category
+      }
+    }
+  }
+}
+
+fragment menuLink on ComponentMenuMenuLink {
+  id
+  link
+  text
+  newTab
+}
+
+fragment post on Post {
+  slug
+  title
+  excerpt
+  content
+  allowComments
+  ...cover
+  ...categories
+  ...tags
+  ...authorPost
+}
+
+fragment settings on Setting {
+  blogName
+  blogDescription
+  logo {
+    data {
+      attributes {
+        ...image
+      }
+    }
+  }
+  menuLink {
+    ...menuLink
+  }
+  Text
+}
+
+query GET_POSTS {
+  setting {
+    data {
+      attributes {
+        ...settings
+      }
+    }
+  }
+  posts {
+    data {
+      attributes {
+        ...post
+      }
+    }
+  }
+}
+
+query GET_POST_BY_SLUG($postSlug: String!) {
+  setting {
+    data {
+      attributes {
+        ...settings
+      }
+    }
+  }
+  posts(filters: { slug: { eq: $postSlug } }) {
+    data {
+      attributes {
+        ...post
+      }
+    }
+  }
+}
+
+query GET_POSTS_BY_AUTHOR($authorSlug: String!) {
+  setting {
+    data {
+      attributes {
+        ...settings
+      }
+    }
+  }
+  posts(filters: { author: { slug: { eq: $authorSlug } } }) {
+    data {
+      attributes {
+        ...post
+      }
+    }
+  }
+}
+
+query GET_POSTS_BY_CATEGORY($categorySlug: String!) {
+  setting {
+    data {
+      attributes {
+        ...settings
+      }
+    }
+  }
+  posts(filters: { categories: { slug: { eq: $categorySlug } } }) {
+    data {
+      attributes {
+        ...post
+      }
+    }
+  }
+}
+
+query GET_POSTS_BY_TAGS($tagSlug: String!) {
+  setting {
+    data {
+      attributes {
+        ...settings
+      }
+    }
+  }
+  posts(filters: { tags: { slug: { eq: $tagSlug } } }) {
+    data {
+      attributes {
+        ...post
+      }
+    }
+  }
+}
